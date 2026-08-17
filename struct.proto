@@ -1,0 +1,31 @@
+syntax = "proto3";
+import "cmd.proto";
+option csharp_namespace = "pb";
+
+// 回包消息头
+message RspHead {
+    int32      Code             = 1;         // 错误码
+    string     Message          = 2;         // 错误信息
+}
+
+// 通用消息包
+message Packet {
+    PacketHead       PacketHead           = 1;
+    bytes            Body                 = 2;         // 消息体
+}
+
+message PacketHead {
+    int32      Seq              = 1;         // 包序号,服务器的回包里的包号为客户端这个+1
+    int64      Timestamp        = 2;         // 时间戳
+    int32      RoleID           = 3;         // 角色ID
+    string     ClientVersion    = 4;         // 客户端版本
+    CMD        Cmd              = 5;         // 命令
+    int32      ClientSeq        = 6;         // 客户端包序号,供客户端做回调使用
+}
+
+message UserInfo {
+    int64      RoleID           = 1;         // 角色ID
+    int64      UID              = 2;         // 用户ID
+    string     UserName         = 3;         // 用户名
+    int32      Level            = 4;         // 等级
+}
